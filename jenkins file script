@@ -1,0 +1,30 @@
+node
+{
+    stage "1.update the system"
+    sh "sudo yum update -y"
+    sh "sudo yum install -y httpd"
+    
+    stage "2. check the service status"
+    sh "sudo ps -auxx | grep httpd"
+    
+    stage "3. start the service"
+    sh "sudo systemctl restart httpd"
+    sh "sudo systemctl enable httpd"
+    
+    stage "4. test the status of the service"
+    sh "sudo ps -auxx | grep httpd"
+    sh "rpm -qa | grep httpd"
+    
+    stage "5. update/create sample page"
+    echo "testing the sample page in httpd"
+    writeFile file:"/var/www/html/index.html",text:"this is sample page hosted in httpd"
+    
+    stage "6. create file/folder"
+    sh "mkdir -p scripted-pipeline"
+    sh "touch scripted-pipeline/sample.txt"
+    sh "df -h"
+    echo "print the date and calender"
+    sh "date"
+    sh "cal"
+    sh "ls -R"
+}
